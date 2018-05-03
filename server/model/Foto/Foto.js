@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../../sequalize');
 
 let Foto = sequelize.define('Foto', {
-    username: Sequelize.STRING,
-    password: Sequelize.STRING
+    nombre: Sequelize.STRING,
+    ruta: Sequelize.STRING
 });
 module.exports = Foto;
