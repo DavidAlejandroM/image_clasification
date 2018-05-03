@@ -1,14 +1,16 @@
 var express = require('express');
 var router = express.Router();
 const pythonShell = require('python-shell');
-
+const Foto = require('../model/Foto')
+const sequelize = require('../sequalize')
+const path = './res/img/'
 const options = {
   args: ['python/']
 };
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  
+  sequelize.close();
   pythonShell.run('python/test.py',options, function (err) {
     if (err) console.log(err);
   });
@@ -27,12 +29,21 @@ router.post('/upload', function(req, res) {
   
   keyFotos.forEach(key => {
     let file = files[key];
-    file.mv(`./res/img/${file.name}`, function(err) {
+    file.mv(`res/img/${file.name}`, function(err) {
       if (err)
         return res.status(500).send(err);
       else
-        console.log(`guardando la imagen con nombre: ${file.name}`);
+        sequelize.sync()
+          .then(() => 
+            Foto.create({ nombre: file.name, ruta: path, clase: ''}))
+              .then(jane => {}),
+              err =>{
+                console.error(err)
+              };
     });
+  });
+  pythonShell.run('python/test.py',options, function (err) {
+    if (err) console.log(err);
   });
   res.send('finish');
 });
