@@ -87,13 +87,24 @@ for foto in fotos:
     sess.close()
     print(classes)
     print(result)
+    # text_file.write(str(type(result))+'\n')
+    # result = result.tolist()
+    # text_file.write(str(type(result))+'\n')
+    # myarray = np.asarray(result)
+    # text_file.write(str(type(myarray))+'\n')
+    maximo = 0
+    indexMax = 0
+    index = 0
+    for respuesta in np.nditer(result):
+        if(respuesta > maximo):
+            maximo = respuesta
+            indexMax = index
+        index += 1
+    text_file.write(classes[indexMax]+" - "+str(maximo * 100)+'\n')
 
-    result = result.tolist()
+    foto.clase = classes[indexMax]
+    foto.save()
     
-    myarray = np.asarray(result)
-    text_file.write(str(len(result))+'\n')
-    for respuesta in myarray:
-        text_file.write(str(respuesta)+'\n')
     #text_file.write(str(result)+'\n')
-
+    #TODO: OBTENER EL MAYOR Y HACER UN UPDATE AL REGISTRO DE LA IMAGEN
 text_file.close()

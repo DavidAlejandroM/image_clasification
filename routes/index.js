@@ -19,7 +19,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/upload', function(req, res) {
-
   let files = req.files
   
   if (!req.files)
@@ -44,7 +43,13 @@ router.post('/upload', function(req, res) {
   });
   pythonShell.run('python/test.py',options, function (err) {
     if (err) console.log(err);
+    Foto.findAll({}).then(data =>{
+      res.send(data);
+      Foto.truncate().then(data=>{
+        //console.log(data);
+      });
+    });
   });
-  res.send('finish');
+  
 });
 module.exports = router;
