@@ -7,6 +7,8 @@ const path = './res/img/'
 const options = {
   args: ['python/']
 };
+const pUtil = require('../utils/positionUtil');
+const orderUtil = require('../utils/orderUtil');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,6 +23,8 @@ router.get('/', function(req, res, next) {
 router.post('/upload', function(req, res) {
   let files = req.files;
   let locations = JSON.parse(req.body.location);
+  let clases = JSON.parse(req.body.clases);
+  let currentLocation = JSON.parse(req.body.currentLocation);
 
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
@@ -33,7 +37,6 @@ router.post('/upload', function(req, res) {
       if (err)
         return res.status(500).send(err);
       else
-        console.log('================================',)
         sequelize.sync()
           .then(() => 
             Foto.create({ 
@@ -53,9 +56,11 @@ router.post('/upload', function(req, res) {
   pythonShell.run('python/test.py',options, function (err) {
     if (err) console.log(err);
     Foto.findAll({}).then(data =>{
-      res.send(data);
+      let fotosOrdenandas = orderUtil.orderFotos(clases,currentLocation,data);
+      //res.send(fotosOrdenandas.concat(data));
+      res.send(fotosOrdenandas);
+      
       data.forEach(foto =>{
-        //eliminando el registro
         foto.destroy();
       })
     });
