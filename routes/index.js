@@ -19,8 +19,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/upload', function(req, res) {
-  let files = req.files
-  
+  let files = req.files;
+  let locations = JSON.parse(req.body.location);
+
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
   
@@ -32,9 +33,17 @@ router.post('/upload', function(req, res) {
       if (err)
         return res.status(500).send(err);
       else
+        console.log('================================',)
         sequelize.sync()
           .then(() => 
-            Foto.create({ nombre: file.name, ruta: path, clase: ''}))
+            Foto.create({ 
+                nombre: file.name, 
+                ruta: path, 
+                clase: '', 
+                latitud: locations[key].latitud, 
+                longitud: locations[key].longitud,
+                altitud: locations[key].altitud
+              }))
               .then(jane => {}),
               err =>{
                 console.error(err)
@@ -45,9 +54,10 @@ router.post('/upload', function(req, res) {
     if (err) console.log(err);
     Foto.findAll({}).then(data =>{
       res.send(data);
-      Foto.truncate().then(data=>{
-        //console.log(data);
-      });
+      data.forEach(foto =>{
+        //eliminando el registro
+        foto.destroy();
+      })
     });
   });
   

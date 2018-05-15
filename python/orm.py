@@ -7,6 +7,9 @@ class Fotos(Model):
     nombre = CharField()
     ruta = CharField()
     clase = CharField()
+    latitud = DoubleField()
+    longitud = DoubleField()
+    altitud = DoubleField()
     createdAt = DateTimeField()
     updatedAt = DateTimeField()
 
