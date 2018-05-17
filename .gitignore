@@ -10,3 +10,9 @@ album/node_modules/
 node_modules/
 
 public/images/
+
+mainDB
+
+Output\.txt
+
+*.pyc
