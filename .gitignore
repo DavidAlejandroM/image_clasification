@@ -1,2 +1,12 @@
 
 model-photos
+
+server/node_modules/
+
+server/img/
+
+album/node_modules/
+
+node_modules/
+
+public/images/
