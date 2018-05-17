@@ -4,11 +4,13 @@ const pythonShell = require('python-shell');
 const Foto = require('../model/Foto')
 const sequelize = require('../sequalize')
 const path = './res/img/'
+const systemPath = 'public/';
 const options = {
   args: ['python/']
 };
 const pUtil = require('../utils/positionUtil');
 const orderUtil = require('../utils/orderUtil');
+const ipServer = 'http://192.168.1.19:3000'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -33,7 +35,8 @@ router.post('/upload', function(req, res) {
   
   keyFotos.forEach(key => {
     let file = files[key];
-    file.mv(`res/img/${file.name}`, function(err) {
+    //file.mv(`res/img/${file.name}`, function(err) {
+      file.mv(`${systemPath}images/${file.name}`, function(err) {
       if (err)
         return res.status(500).send(err);
       else
@@ -41,7 +44,8 @@ router.post('/upload', function(req, res) {
           .then(() => 
             Foto.create({ 
                 nombre: file.name, 
-                ruta: path, 
+                ruta: `${systemPath}images/`,
+                uri: `${ipServer}/images/${file.name}`,
                 clase: '', 
                 latitud: locations[key].latitud, 
                 longitud: locations[key].longitud,

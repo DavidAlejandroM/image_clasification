@@ -6,6 +6,7 @@ class Fotos(Model):
     
     nombre = CharField()
     ruta = CharField()
+    uri = CharField()
     clase = CharField()
     latitud = DoubleField()
     longitud = DoubleField()

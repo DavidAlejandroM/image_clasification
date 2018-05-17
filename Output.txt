@@ -1,6 +1,6 @@
-personas	animales	urbano	paisaje	transporte	23.jpg
-personas - 42.33386218547821
-22.jpg
-transporte - 99.75456595420837
-1.jpeg
-animales - 99.7554361820221
+personas	animales	urbano	paisaje	transporte	25.jpeg
+urbano - 97.33814597129822
+8.jpeg
+animales - 99.99783039093018
+11.jpeg
+animales - 99.97735619544983

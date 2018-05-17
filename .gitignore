@@ -8,3 +8,5 @@ server/img/
 album/node_modules/
 
 node_modules/
+
+public/images/
