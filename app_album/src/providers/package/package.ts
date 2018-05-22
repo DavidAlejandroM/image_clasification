@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Foto } from '../../model/Foto'
 
 /*
   Generated class for the PackageProvider provider.
@@ -10,8 +11,25 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class PackageProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello PackageProvider Provider');
+  constructor() {
+  }
+
+  getFotosPackage(photos:Foto[], currentLocation:any){
+    let body = [];
+    let location = [];
+    
+    photos.forEach((photo, index) => {
+      let objeto = {};
+      objeto[index.toString()] = photo.getLocation();
+      location.push(objeto);
+    });
+
+    body["location"] = location;
+    return {
+      method: "POST",
+      url: 'upload',
+      body: body
+    }
   }
 
 }
